@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # v3
         with:
           node-version: 18
-          registry-url: ${{ github.event.inputs.environment == 'production' && "https://registry.npmjs.com" || secrets.NPM_REGISTRY_STAGING }}
+          registry-url: ${{ github.event.inputs.environment == 'production' && 'https://registry.npmjs.com' || secrets.NPM_REGISTRY_STAGING }}
           check-latest: true
       - name: Bump package versions
         run: |
