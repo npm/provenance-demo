@@ -1,0 +1,24 @@
+{
+  "name": "@ps-testing/dummy-provenance",
+  "version": "1.0.0",
+  "description": "testing provenance",
+  "private": false,
+  "main": "index.js",
+  "scripts": {},
+  "files": [
+    "index.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/npm/provenance-demo"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/npm/provenance-demo/issues"
+  },
+  "homepage": "https://github.com/npm/provenance-demo#readme",
+  "dependencies": {
+    "sigstore": "^1.8.0"
+  }
+}
