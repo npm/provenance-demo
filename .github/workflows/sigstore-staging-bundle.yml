@@ -1,0 +1,36 @@
+name: sigstore-staging-bundle
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Setup node
+        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93 # v3
+        with:
+          node-version: 18
+          registry-url: 'https://registry.npmjs.org'
+      - name: statement
+        run: |
+          cat > statement.json <<- EOM
+          {
+            "_type": "https://in-toto.io/Statement/v1",
+            "subject": [{
+              "digest": { "sha256": "abcd" }
+            }],
+            "predicateType": "https://github.com/github/package-security-learning-labs@v0.1-staging"
+          }
+          EOM
+      - name: attest
+        run: |
+          npm install -g @sigstore/cli
+          sigstore attest ./statement.json --fulcio-url "https://fulcio.sigstage.dev" --rekor-url "https://rekor.sigstage.dev" -o bundle.sigstore
+          cat bundle.sigstore | jq ".verificationMaterial.x509CertificateChain.certificates[0].rawBytes" | tr -d '"' | base64 -d | openssl x509 -text -inform der -noout
+      - uses: actions/upload-artifact@v3
+        with:
+          name: bundle.sigstore
+          path: ./bundle.sigstore
