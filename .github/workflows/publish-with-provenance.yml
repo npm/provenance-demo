@@ -48,7 +48,7 @@ jobs:
           npm install --registry https://registry.npmjs.com
           npm pack --json
           TARBALL=$(readlink -f  *.tgz)
-          npm publish ${TARBALL} --provenance --access public
+          npm publish ${TARBALL} --provenance --access public --registry ${{ github.event.inputs.environment == 'production' && 'https://registry.npmjs.com' || secrets.NPM_REGISTRY_STAGING }}
       - uses: actions/upload-artifact@v3
         with:
           name: package.tgz
