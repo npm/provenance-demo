@@ -24,7 +24,7 @@ jobs:
       contents: read
     uses: bdehamer/workflows/.github/workflows/oidc-dump.yml@main
   publish:
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.inputs.environment == 'production' && 'ubuntu-latest' || 'self-hosted' }}
     permissions:
       contents: read
       id-token: write
