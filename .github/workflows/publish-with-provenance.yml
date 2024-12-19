@@ -38,7 +38,7 @@ jobs:
         run: |
           npm install -g npm@${{ github.event.inputs.cli_version }}
           npm install
-          npm publish --provenance --access public
+          npm publish --provenance --access public --tag latest
       - uses: actions/upload-artifact@v3
         with:
           name: package.tgz
